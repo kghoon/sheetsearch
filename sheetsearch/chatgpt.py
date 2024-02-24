@@ -1,8 +1,9 @@
-import openai
+from openai import OpenAI
 from sheetsearch import config
 
 
 def query(prompt: str):
+    '''
     openai.api_key = config.OPENAI_API_KEY
 
     completion = openai.ChatCompletion.create(
@@ -17,6 +18,21 @@ def query(prompt: str):
 
     message = completion['choices'][0]['message']
     csv_string = message['content']
+    '''
+
+    client = OpenAI(api_key=config.OPENAI_API_KEY)
+    chat_completion = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+              {
+                "role": "user",
+                "content": prompt,
+            }
+        ]
+    )
+
+    message = chat_completion.choices[0].message
+    csv_string = message.content
 
     result = {}
     try:

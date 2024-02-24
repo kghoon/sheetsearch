@@ -21,6 +21,8 @@ def download_file(url, filename):
         ext = '.png'
     elif mime_type == 'image/gif':
         ext = '.gif'
+    # elif mime_type == 'image/svg+xml':
+        # ext = '.svg'
     else:
         raise ValueError('Unknown MIME type: ' + mime_type)
 

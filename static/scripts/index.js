@@ -118,11 +118,13 @@ async function generateImageList(title, key) {
         .then((res) => res.json())
 
 
-    const elems = r.items.map((item) => {
+    const elems = r.items
+      .filter((item) => !item.link.includes(".svg"))
+      .map((item) => {
         htmlText = `<a href="${item.link}">
             <div class="image-crop"><img src="${item.link}" alt="${item.title}" class="card-img-top" ></div>
         </a>`;
-        const myId = randomId()
+        const myId = randomId();
 
         wrapperHtmlText = `
         <div class="card" style="width: 440px; height: 540px; padding: 20px">
@@ -138,13 +140,13 @@ async function generateImageList(title, key) {
             </div>
         </div>`;
 
-        const li = document.createElement('li');
+        const li = document.createElement("li");
         li.innerHTML = wrapperHtmlText;
-        li.querySelector('img').addEventListener('error', function() {
-            li.remove();
-        })
+        li.querySelector("img").addEventListener("error", function () {
+          li.remove();
+        });
         return li;
-    })
+      });
 
     const elem = document.createElement('div');
     elem.classList.add('row');
